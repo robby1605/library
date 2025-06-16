@@ -28,7 +28,15 @@ cd library
 pip install -r requirements.txt
 ```
 
-### 3. Configure Environment Variables
+### 3. Import Database from SQL File -> Using pgAdmin
+
+- Open pgAdmin and connect to your PostgreSQL server.
+- Create a new database named library_db (if not exists).
+- Right-click on library_api → Restore → choose your .sql file.
+- Set format to "Custom" or "Plain" depending on your export type.
+- Click Restore.
+
+### 4. Configure Environment Variables
 
 Create a `.env` file and add the following content:
 
@@ -36,7 +44,7 @@ Create a `.env` file and add the following content:
 DATABASE_URL=postgresql://postgres:password@localhost:5432/library_db
 ```
 
-### 4. Run the Server
+### 5. Run the Server
 
 ```bash
 flask run --debug
