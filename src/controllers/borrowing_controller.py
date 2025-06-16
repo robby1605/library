@@ -7,6 +7,23 @@ from src.models.member import Member
 from src.services import borrowing_service 
 import uuid
 
+
+# LIST BORROWING
+def get_all_borrowings():
+    title = request.args.get('title')
+    author = request.args.get('author')
+    page = int(request.args.get('page', 1))
+    limit = int(request.args.get('limit', 10))
+
+    borrowings, total = borrowing_service.get_all_borrowings(title, author, page, limit)
+
+    return jsonify({
+        "data": [b.to_dict() for b in borrowings],
+        "total": total,
+        "page": page,
+        "limit": limit
+    })
+
 # BORROWED BOOK
 def create_borrowing():
     data = request.get_json()

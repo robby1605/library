@@ -1,12 +1,18 @@
+import os
 from flask import Flask
+from dotenv import load_dotenv
 from src.config.database import init_db
 from src.routes.book_route import book_bp
 from src.routes.member_route import member_bp
 from src.routes.borrowing_route import borrowing_bp
 
+
 def create_app():
+    
+    load_dotenv()
+
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:root@localhost:5432/library_api'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     init_db(app)

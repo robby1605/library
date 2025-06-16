@@ -1,51 +1,108 @@
+# 📚 Library Management API
 
-Install Python 3.11.9
-Inttall Postgree SQL
+A simple REST API for library management, built with Flask and PostgreSQL.
 
-Install Library Python
-<!-- Install dari requirements.txt -->
+---
+
+## ✅ Prerequisites
+
+Before running this project, make sure you have installed:
+
+- 🐍 Python version 3.11.9 (3.8+ supported)
+- 🐘 PostgreSQL (Database Server)
+
+---
+
+## 🚀 Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/library.git
+cd library
+```
+
+### 2. Install Dependencies
+
+```bash
 pip install -r requirements.txt
-<!-- Setelah install library baru, jangan lupa update requirements.txt dengan: -->
-pip install -r requirements.txt
+```
 
-{
-  "data": [
-    {
-      "book": {
-        "author": "F. Scott Fitzgerald",
-        "id": "164ac3dd-5e76-4324-ba00-21ea6ab6e8af",
-        "isbn": "9780743273565",
-        "published_year": 1925,
-        "title": "The Great Gatsby"
-      },
-      "borrowing": {
-        "book_id": "164ac3dd-5e76-4324-ba00-21ea6ab6e8af",
-        "borrow_date": "2025-06-16",
-        "id": "30db409c-c2bf-41d5-9241-18e402c27734",
-        "member_id": "6c83d746-377b-43fe-854d-5088d7e3b91e",
-        "return_date": null,
-        "status": "BORROWED"
-      }
-    },
-    {
-      "book": {
-        "author": "Stieg Larsson",
-        "id": "b2592c38-bdc5-417b-aeae-f32e75186f3a",
-        "isbn": "9780307949486",
-        "published_year": 2005,
-        "title": "The Girl with the Dragon Tattoo"
-      },
-      "borrowing": {
-        "book_id": "b2592c38-bdc5-417b-aeae-f32e75186f3a",
-        "borrow_date": "2025-06-16",
-        "id": "b92cd192-0fe7-4665-b609-14444ca038df",
-        "member_id": "6c83d746-377b-43fe-854d-5088d7e3b91e",
-        "return_date": "2025-06-16",
-        "status": "RETURNED"
-      }
-    }
-  ],
-  "limit": 10,
-  "page": 1,
-  "total": 2
-}
+### 3. Configure Environment Variables
+
+Create a `.env` file and add the following content:
+
+```
+DATABASE_URL=postgresql://postgres:password@localhost:5432/library_db
+```
+
+### 4. Run the Server
+
+```bash
+flask run --debug
+```
+atau
+```bash
+python app.py
+```
+
+The application will be available at:  
+`http://localhost:5000`
+
+---
+
+## 📘 API Documentation
+
+### 🔖 Books
+
+| Method | Endpoint           | Description        |
+|--------|--------------------|--------------------|
+| GET    | `/api/books`       | Retrieve book list |
+| POST   | `/api/books`       | Add a new book     |
+| PUT    | `/api/books/:id`   | Update a book      |
+| DELETE | `/api/books/:id`   | Delete a book      |
+
+---
+
+### 👤 Members
+
+| Method | Endpoint                      | Description                   |
+|--------|-------------------------------|-------------------------------|
+| GET    | `/api/members`                | Retrieve all members          |
+| POST   | `/api/members`                | Create a new member           |
+| PUT    | `/api/members/:id`            | Update member data            |
+| DELETE | `/api/members/:id`            | Delete a member               |
+| GET    | `/api/members/:id/borrowings` | View member borrowing history |
+
+> **Query parameters** for `/members/:id/borrowings`:
+> - `status` (`BORROWED` / `RETURNED`)
+> - `page`
+> - `limit`
+
+---
+
+### 📖 Borrowings
+
+| Method | Endpoint                     | Description                   |
+|--------|------------------------------|-------------------------------|
+| GET    | `/api/borrowings`            | Retrieve all borrowings       |
+| POST   | `/api/borrowings`            | Create a new borrowing record |
+| PUT    | `/api/borrowings/:id/return` | Mark a book as returned       |
+
+> ✅ **Borrowing Rules:**
+> - Book stock must be greater than 0  
+> - A member can borrow up to 3 books  
+> - Book stock will be decreased  
+> - `borrow_date` is set automatically  
+
+> ✅ **Return Rules:**
+> - Status is set to `RETURNED`  
+> - `return_date` is set automatically  
+> - Book stock will be increased  
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome!  
+Feel free to fork the repository and submit improvements or bug fixes.

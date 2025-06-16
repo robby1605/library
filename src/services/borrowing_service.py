@@ -4,6 +4,21 @@ from src.config.database import db
 from sqlalchemy import func
 from datetime import date
 
+# LIST BORROWING BOOK
+def get_all_borrowings(title=None, author=None, page=1, limit=10):
+    query = Borrowing.query.join(Book, Borrowing.book_id == Book.id)
+
+    if title:
+        query = query.filter(func.lower(Book.title).like(f"%{title.lower()}%"))
+    if author:
+        query = query.filter(func.lower(Book.author).like(f"%{author.lower()}%"))
+    
+    total = query.count()
+    borrowings = query.offset((page - 1) * limit).limit(limit).all()
+
+    return borrowings, total
+
+
 # BORROWING BOOK
 def create_borrowing(data):
     borrowing = Borrowing(**data)
