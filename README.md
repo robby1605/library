@@ -31,8 +31,8 @@ pip install -r requirements.txt
 ### 3. Import Database from SQL File -> Using pgAdmin
 
 - Open pgAdmin and connect to your PostgreSQL server.
-- Create a new database named library_db (if not exists).
-- Right-click on library_api → Restore → choose your .sql file.
+- Create a new database named library_api (if not exists).
+- Right-click on library_api → Restore → choose library_api.sql file.
 - Set format to "Custom" or "Plain" depending on your export type.
 - Click Restore.
 
@@ -41,7 +41,7 @@ pip install -r requirements.txt
 Create a `.env` file and add the following content:
 
 ```
-DATABASE_URL=postgresql://postgres:password@localhost:5432/library_db
+DATABASE_URL=postgresql://yourusername:yourpassword@localhost:5432/library_api
 ```
 
 ### 5. Run the Server
